@@ -1,0 +1,41 @@
+package com.java.block.party.client.handler;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.java.block.party.client.service.BlockPartyClientService;
+import com.java.block.party.model.AllItems;
+import com.java.block.party.model.ItemDetails;
+import com.java.block.party.model.QueryParams;
+import com.java.block.party.model.SortOrder;
+import com.java.block.party.template.exception.BlockPartySearchException;
+
+import reactor.core.publisher.Mono;
+
+@RestController
+public class BlockPartyClientRestHandler {
+
+    private static final String GET_PARTY_DETAILS_BY_ID_V1 = "client/party/query";
+    private static final String GET_BLOCK_PARTIES_V1 = "client/parties";
+
+    @Autowired
+    private BlockPartyClientService blockPartyClientService;
+
+    @GetMapping(GET_PARTY_DETAILS_BY_ID_V1)
+    public Mono<ItemDetails> getBlockPartyDetails(@RequestParam(name = "id", required = true) String id) {
+        return blockPartyClientService.getBlockPartyDetails(id);
+    }
+
+    @PostMapping(GET_BLOCK_PARTIES_V1)
+    public Mono<AllItems> getBlockParties(@RequestBody QueryParams partySearchRequest) {
+        SortOrder sortOrder = partySearchRequest.getSortOrder();
+        if (sortOrder != null && (sortOrder.getType().isBlank() || sortOrder.getOrder() == null)) {
+            throw new BlockPartySearchException("sort order does not contain proper details.");
+        }
+        return blockPartyClientService.getBlockParties(partySearchRequest);
+    }
+}
