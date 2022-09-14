@@ -1,2 +1,2 @@
-# flea-market-block-serach
+# Flea-market-block-serach
 Find good party events on flea market
