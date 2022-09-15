@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.java.block.party.model.AllItems;
 import com.java.block.party.model.ItemDetails;
 import com.java.block.party.model.QueryParams;
+import com.java.block.party.model.geo.ItemsGeoLocation;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -16,6 +17,10 @@ public class BlockPartyClientService {
 
     @Autowired
     private FleaMarketClientService fleaMarketClientService;
+
+    public Mono<ItemsGeoLocation> getFleaMarketItemsGeoLocation(QueryParams queryParams) {
+        return fleaMarketClientService.getFleaMarketItemsGeoLocation(queryParams);
+    }
 
     public Mono<ItemDetails> getBlockPartyDetails(String id) {
         log.info("party details for the given id : {}", id);

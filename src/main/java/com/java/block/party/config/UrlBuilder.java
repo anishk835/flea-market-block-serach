@@ -9,27 +9,37 @@ import com.java.block.party.config.Property.DefaultProperty;
 public class UrlBuilder {
 
     private static final String ITEM_ID = "{itemId}";
-    
+
     @Autowired
     private Property property;
 
-    public String getAllItems() {
+    public String getAllItemsJsonUrl() {
         StringBuilder sb = new StringBuilder();
         DefaultProperty defaultProperty = property.getDefaultProperty();
         sb.append(defaultProperty.getBaseUrl());
         sb.append(defaultProperty.getItemsSuffix());
-        sb.append(defaultProperty.getFormat());
+        sb.append(defaultProperty.getJson());
         sb.append(defaultProperty.getQueryString());
         return sb.toString();
     }
 
-    public String getItem() {
+    public String getItemJsonUrl() {
         StringBuilder sb = new StringBuilder();
         DefaultProperty defaultProperty = property.getDefaultProperty();
         sb.append(defaultProperty.getBaseUrl());
         sb.append(defaultProperty.getItemSuffix());
         sb.append(ITEM_ID);
-        sb.append(defaultProperty.getFormat());
+        sb.append(defaultProperty.getJson());
+        return sb.toString();
+    }
+
+    public String getItemsGeoJsonUrl() {
+        StringBuilder sb = new StringBuilder();
+        DefaultProperty defaultProperty = property.getDefaultProperty();
+        sb.append(defaultProperty.getBaseUrl());
+        sb.append(defaultProperty.getItemsSuffix());
+        sb.append(defaultProperty.getGeojson());
+        sb.append(defaultProperty.getQueryString());
         return sb.toString();
     }
 

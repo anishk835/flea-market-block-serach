@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "[Rest Template] Get block parties",
+			"name": "[Rest Template] Block parties",
 			"event": [
 				{
 					"listen": "test",
@@ -54,7 +54,33 @@
 			"response": []
 		},
 		{
-			"name": "[Web Client] Get block parties",
+			"name": "[Rest Template] Party details by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/party/query?id=321",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"party",
+						"query"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "321"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Web Client] Block parties",
 			"event": [
 				{
 					"listen": "test",
@@ -102,38 +128,12 @@
 			"response": []
 		},
 		{
-			"name": "[Rest Template] Get party details by ID",
+			"name": "[Web Client] Party details by ID",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/party/query?id=315",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"party",
-						"query"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "315"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[Web Client] Get party details by ID",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/client/party/query?id=315",
+					"raw": "http://localhost:8080/client/party/query?id=321",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -147,8 +147,58 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "315"
+							"value": "321"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Web Client] Geo location block parties",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    console.log(JSON.parse(pm.response.text()));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/client/parties/geolocation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"client",
+						"parties",
+						"geolocation"
 					]
 				}
 			},

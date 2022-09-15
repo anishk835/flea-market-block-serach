@@ -17,16 +17,17 @@ public class PartySearchService {
     @Autowired
     private FleaMarketRestService fleaMarketRestService;
 
-    @Cacheable(key = "#partySearchRequest")
+    @Cacheable(key = "#partySearchRequest", value = "partySearchResponse")
     public PartySearchResponse getBlockParties(QueryParams partySearchRequest) {
         AllItems items = fleaMarketRestService.getBlockParties(partySearchRequest);
         PartySearchResponse partySearchResponse = new PartySearchResponse();
         partySearchResponse.setItems(items.getIndex());
         partySearchResponse.setResults(items.getResults());
+        partySearchResponse.setSortOrder(partySearchRequest.getSortOrder());
         return partySearchResponse;
     }
 
-    @Cacheable(key = "#id")
+    @Cacheable(key = "#id", value = "partySearchResponse")
     public PartySearchResponse getBlockPartyDetails(String id) {
         ItemDetails itemDetails = fleaMarketRestService.getBlockPartyDetails(id);
         PartySearchResponse partySearchResponse = new PartySearchResponse();

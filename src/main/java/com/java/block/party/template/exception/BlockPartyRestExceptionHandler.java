@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class BlockPartyRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     final static Logger LOGGER = LoggerFactory.getLogger(BlockPartyRestExceptionHandler.class);
-            
+
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
             HttpHeaders headers, HttpStatus status, WebRequest request) {

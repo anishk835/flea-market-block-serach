@@ -20,7 +20,7 @@ public class PartySearchRestController {
     private PartySearchService partySearchService;
 
     @GetMapping("/")
-    public String home(){
+    public String home() {
         return "Hello World!";
     }
 

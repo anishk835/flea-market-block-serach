@@ -1,18 +1,22 @@
 package com.java.block.party.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-public class PartySearchResponse {
+@ToString
+public class PartySearchResponse implements Serializable {
 
-    private Results results;
-    private List<Index> items;
-    private SortOrder sortOrder;
-    private Index index;
-    private Item item;
+    private static final long serialVersionUID = 1L;
+
+    private transient Results results;
+    private transient List<Index> items;
+    private transient SortOrder sortOrder;
+    private transient Item item;
 
 }

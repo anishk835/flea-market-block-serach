@@ -12,6 +12,9 @@ import com.java.block.party.model.ItemDetails;
 import com.java.block.party.model.QueryParams;
 import com.java.block.party.model.SortOrder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class FleaMarketRestService {
 
@@ -22,14 +25,16 @@ public class FleaMarketRestService {
     private UrlBuilder urlBuilder;
 
     public AllItems getBlockParties(final QueryParams params) {
-        String url = UriComponentsBuilder.fromUriString(urlBuilder.getAllItems()).query(buildQueryParam(params)).build()
-                .toString();
+        String url = UriComponentsBuilder.fromUriString(urlBuilder.getAllItemsJsonUrl()).query(buildQueryParam(params))
+                .build().toString();
+        log.debug("items url with query string is : {}", url);
         ResponseEntity<AllItems> response = restTemplate.getForEntity(url, AllItems.class);
         return response.getBody();
     }
 
     public ItemDetails getBlockPartyDetails(final String id) {
-        String url = UriComponentsBuilder.fromUriString(urlBuilder.getItem()).buildAndExpand(id).toUriString();
+        String url = UriComponentsBuilder.fromUriString(urlBuilder.getItemJsonUrl()).buildAndExpand(id).toUriString();
+        log.debug("item details url is : {}", url);
         ResponseEntity<ItemDetails> response = restTemplate.getForEntity(url, ItemDetails.class);
         return response.getBody();
     }

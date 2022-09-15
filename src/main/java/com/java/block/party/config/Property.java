@@ -2,9 +2,6 @@ package com.java.block.party.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @ConfigurationProperties(prefix = "party")
 public class Property {
 
@@ -16,14 +13,14 @@ public class Property {
         private String itemssuffix;
         private String itemsuffix;
         private String querystring;
-        private String format;
+        private String json;
+        private String geojson;
 
         public String getBaseUrl() {
             return baseurl;
         }
 
         public void setBaseUrl(String baseUrl) {
-            log.info("base url is : {}", baseUrl);
             this.baseurl = baseUrl;
         }
 
@@ -51,12 +48,20 @@ public class Property {
             this.querystring = querystring;
         }
 
-        public String getFormat() {
-            return format;
+        public String getJson() {
+            return json;
         }
 
-        public void setFormat(String format) {
-            this.format = format;
+        public void setJson(String json) {
+            this.json = json;
+        }
+
+        public String getGeojson() {
+            return geojson;
+        }
+
+        public void setGeojson(String geojson) {
+            this.geojson = geojson;
         }
 
     }

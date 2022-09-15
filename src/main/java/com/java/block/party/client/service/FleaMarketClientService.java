@@ -10,9 +10,12 @@ import com.java.block.party.model.AllItems;
 import com.java.block.party.model.ItemDetails;
 import com.java.block.party.model.QueryParams;
 import com.java.block.party.model.SortOrder;
+import com.java.block.party.model.geo.ItemsGeoLocation;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Service
 public class FleaMarketClientService {
 
@@ -22,14 +25,23 @@ public class FleaMarketClientService {
     @Autowired
     private UrlBuilder urlBuilder;
 
-    public Mono<AllItems> getBlockParties(final QueryParams params) {
-        String url = UriComponentsBuilder.fromUriString(urlBuilder.getAllItems()).query(buildQueryString(params))
+    public Mono<ItemsGeoLocation> getFleaMarketItemsGeoLocation(final QueryParams params) {
+        String url = UriComponentsBuilder.fromUriString(urlBuilder.getItemsGeoJsonUrl()).query(buildQueryString(params))
                 .build().toUriString();
+        log.debug("geo based items details url is : {}", url);
+        return webClient.get().uri(url).retrieve().bodyToMono(ItemsGeoLocation.class);
+    }
+
+    public Mono<AllItems> getBlockParties(final QueryParams params) {
+        String url = UriComponentsBuilder.fromUriString(urlBuilder.getAllItemsJsonUrl()).query(buildQueryString(params))
+                .build().toUriString();
+        log.debug("items url with query string is : {}", url);
         return webClient.get().uri(url).retrieve().bodyToMono(AllItems.class);
     }
 
     public Mono<ItemDetails> getBlockPartyDetails(final String id) {
-        String url = UriComponentsBuilder.fromUriString(urlBuilder.getItem()).buildAndExpand(id).toUriString();
+        String url = UriComponentsBuilder.fromUriString(urlBuilder.getItemJsonUrl()).buildAndExpand(id).toUriString();
+        log.debug("item details url is : {}", url);
         return webClient.get().uri(url).retrieve().bodyToMono(ItemDetails.class);
     }
 
