@@ -2,7 +2,13 @@
 
 mkdir -p {redis-0}
 
-echo "protected-mode no \n port 6379 \n #authentication \n masterauth redispw \n requirepass redispw" > ${PWD}/redis-0/redis.conf
+CONFIG="protected-mode no
+port 6379
+#authentication
+masterauth redispw
+requirepass redispw"
+
+echo "$CONFIG" > "${PWD}"/redis-0/redis.conf
 
 docker run -d -p 55005:6379 --rm --name redis-0 \
     --net redis -v ${PWD}/redis-0:/etc/redis/ \
