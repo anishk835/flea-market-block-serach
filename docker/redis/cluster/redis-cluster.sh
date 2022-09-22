@@ -1,15 +1,14 @@
 #!/bin/bash
 
-mkdir {"sentinel-0","sentinel-1","sentinel-2"}
+mkdir -p {"sentinel-0","sentinel-1","sentinel-2"}
 
-SENTINEL_CONFIG="#********BASIC CONFIG************************************
-port 5000
+SENTINEL_CONFIG="port 5000
+sentinel resolve-hostnames yes
 sentinel monitor mymaster redis-0 6379 2
 sentinel down-after-milliseconds mymaster 5000
 sentinel failover-timeout mymaster 60000
 sentinel parallel-syncs mymaster 1
-sentinel auth-pass mymaster redispw
-#********************************************"
+sentinel auth-pass mymaster redispw"
 
 echo "$SENTINEL_CONFIG" > ${PWD}/sentinel-0/sentinel.conf
 echo "$SENTINEL_CONFIG" > ${PWD}/sentinel-1/sentinel.conf
